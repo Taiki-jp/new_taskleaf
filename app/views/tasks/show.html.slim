@@ -1,2 +1,23 @@
-h1 Tasks#show
-p Find me in app/views/tasks/show.html.slim
+h1 タスクの詳細
+
+.nav.justify-content-end 
+ = link_to '一覧', tasks_path, class: 'nav-link'
+.mb-3 
+/ テーブルタグの table table-hover クラス
+table.table.table-hover
+ thead.thead-default 
+  tr 
+   th = Task.human_attribute_name(:id)
+   th = Task.human_attribute_name(:name)
+   th = Task.human_attribute_name(:description)
+   th = Task.human_attribute_name(:created_at)
+   th = Task.human_attribute_name(:updated_at)
+ tbody 
+  tr 
+   td = @task.id
+   td = @task.name
+   td = simple_format(h(@task.description), {}, sanitize: false, wrapper_tag: "div")
+   td = @task.created_at
+   td = @task.updated_at
+= link_to  "編集", edit_task_path(@task), class: 'btn btn-primary mr-3' 
+= link_to "削除", @task, method: :delete, data: { confirm: "タスク「#{@task.name}を削除します。よろしいですか？」"}, class: 'btn btn-danger'
